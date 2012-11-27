@@ -27,8 +27,21 @@ end
 class TweetDestroyer
 
   def self.destroy_all_tweets
-    Twitter.user_timeline('jinglebots').each do |tweet|
-      Twitter.status_destroy(tweet.attrs["id"])
+    Twitter.user_timeline('jinglebots', :count => 200, :trim_user => true).each do |tweet|
+      Twitter.status_destroy(tweet.id)
+    end
+  end
+
+  def self.destroy_allemando_tweets
+    Twitter.configure do |config|
+      config.consumer_key       = ENV["JINGLEBOTS_TWITTER_CONSUMER_KEY"]
+      config.consumer_secret    = ENV["JINGLEBOTS_TWITTER_CONSUMER_SECRET"]
+      config.oauth_token        = ENV["ALLEMANDOSAUCE_TWITTER_TOKEN"]
+      config.oauth_token_secret = ENV["ALLEMANDOSAUCE_TWITTER_SECRET"]
+    end
+    
+    Twitter.user_timeline('allemandosauce', :count => 200, :trim_user => true).each do |tweet|
+      Twitter.status_destroy(tweet.id)
     end
   end
 
