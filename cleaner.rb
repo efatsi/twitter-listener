@@ -3,10 +3,9 @@ require 'redis'
 require 'uri'
 
 load 'helpers/twitter_helper.rb'
-
-uri = URI.parse(ENV["JINGLEBOTS_REDIS_URI"])
-REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-
-REDIS.flushdb
+load 'helpers/redis_cleaner.rb'
+load 'helpers/aws_cleaner.rb'
 
 TweetDestroyer.destroy_all_tweets
+RedisCleaner.clear_database
+AWSCleaner.remove_audio_files

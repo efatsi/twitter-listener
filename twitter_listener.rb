@@ -38,7 +38,6 @@ EventMachine::run do
     end
   end
 
-  
   stream.on_error do |message|
     mail_me("Error", message)
   end
@@ -69,7 +68,7 @@ EventMachine::run do
       :domain               => 'localhost.localdomain'
     })
   end
-  
+
   def assemble_data(tweet)
     count = REDIS.llen("messages") + 1
     {:msg => tweet["text"], :name => "@#{tweet["user"]["screen_name"]}", :count => count, :gif_name => random_gif, :robot_name => random_robot, :time => Time.now, :source => "twitter"}
