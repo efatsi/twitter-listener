@@ -7,6 +7,7 @@ require 'redis'
 ## Only one office robot should run this whole file!
 
 load 'helpers/gif_collection.rb'
+load 'helpers/twitter_helper.rb'
 
 uri = URI.parse(ENV["JINGLEBOTS_REDIS_URI"])
 REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
@@ -33,6 +34,7 @@ EventMachine::run do
       REDIS.lpush("messages", data.to_json)
       REDIS.set("message:#{data[:count]}", data.to_json)
       REDIS.publish("holiday_messages", data.to_json)
+      Tweeter.new(data[:name], data[:count]).send
     end
   end
 
