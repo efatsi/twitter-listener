@@ -8,14 +8,18 @@ class AWSCleaner
   )
 
   def self.remove_audio_files
-    audio_file_keys.each{|key| AWS::S3::S3Object.delete(key, 'jinglebots') }
+    keys_for("voice_recordings").each{|key| AWS::S3::S3Object.delete(key, 'jinglebots') }
+  end
+
+  def self.remove_screenshots
+    keys_for("screenshots").each{|key| AWS::S3::S3Object.delete(key, 'jinglebots') }
   end
 
   private
 
-  def self.audio_file_keys
+  def self.keys_for(file_type)
     all_files.select do |file|
-      file.send(:attributes)["key"].include?("voice_recordings")
+      file.send(:attributes)["key"].to_s.include?(file_type)
     end.map{|f| f.send(:attributes)["key"]}
   end
 

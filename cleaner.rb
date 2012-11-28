@@ -9,3 +9,4 @@ load 'helpers/aws_cleaner.rb'
 TweetDestroyer.destroy_all_tweets
 RedisCleaner.clear_database
 AWSCleaner.remove_audio_files
+AWSCleaner.remove_screenshots
