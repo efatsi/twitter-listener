@@ -26,7 +26,7 @@ end
 
 class TweetDestroyer
 
-  def self.destroy_all_tweets
+  def self.destroy_jinglebots_tweets
     Twitter.user_timeline('jinglebots', :count => 200, :trim_user => true).each do |tweet|
       Twitter.status_destroy(tweet.id)
     end
