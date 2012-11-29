@@ -77,7 +77,7 @@ EventMachine::run do
   end
 
   def avatar_url_for(username)
-    Twitter.user(username).profile_image_url
+    Twitter.user(username).profile_image_url(:bigger)
   end
 
 end
