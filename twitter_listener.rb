@@ -4,8 +4,6 @@ require 'json'
 require 'pony'
 require 'redis'
 
-## Only one office robot should run this whole file!
-
 load 'helpers/gif_collection.rb'
 load 'helpers/twitter_helper.rb'
 
@@ -71,11 +69,15 @@ EventMachine::run do
 
   def assemble_data(tweet)
     count = REDIS.llen("messages") + 1
-    {:msg => tweet["text"], :name => "@#{tweet["user"]["screen_name"]}", :count => count, :gif_name => random_gif, :robot_name => random_robot, :time => Time.now, :source => "twitter"}
+    {:msg => tweet["text"], :name => "@#{tweet["user"]["screen_name"]}", :count => count, :gif_name => random_gif, :robot_name => random_robot, :time => Time.now, :source => "twitter", :avatar_url => avatar_url_for(tweet["user"]["screen_name"])}
   end
 
   def random_robot
     ["klaus", "rudy", "cornelious"].sample
+  end
+
+  def avatar_url_for(username)
+    Twitter.user(username).profile_image_url
   end
 
 end
