@@ -27,7 +27,14 @@ class Tweeter
     "No, happy holidays to YOU #{@username}! #{link}",
     "#{@username} our moment together was special and well-documented: #{link}",
     "#{@username} Here is Random Access to our Memory together - happy holidays: #{link}",
-    "32k of holiday memory for you #{@username}! #{link}"
+    "32k of holiday memory for you #{@username}! #{link}",
+    "#{@username} Thanks for sharing some cheer, here's a little something for you: #{link}",
+    "Holiday cheer from #{@username} captured: #{link}",
+    "We cherish the moment we had with you #{@username}: #{link}",
+    "#{@username} Thanks for spreading some cheer! Here's a gift for you from the JingleBots: #{link}",
+    "#{@username} Thanks! Now, a gift for you: #{link} Love, the JingleBots",
+    "#{@username} We know you'll want to forever cherish the moment you had with the JingleBots: #{link}",
+    "A classic holiday memory for you #{@username}: #{link}"
     ]
   end
   
