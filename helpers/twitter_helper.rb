@@ -19,9 +19,21 @@ class Tweeter
   end
 
   def new_message
-    "#{@username} Thanks for your holiday wishes, check out your JingleBots souvenir! jinglebots.herokuapp.com/report/#{@count}"
+    messages.sample
   end
 
+  def messages
+    ["#{@username} Thanks for your holiday wishes, check out your JingleBots souvenir! #{link}",
+    "No, happy holidays to YOU #{@username}! #{link}",
+    "#{@username} our moment together was special and well-documented: #{link}",
+    "#{@username} Here is Random Access to our Memory together - happy holidays: #{link}",
+    "32k of holiday memory for you #{@username}! #{link}"
+    ]
+  end
+  
+  def link
+    "jinglebots.herokuapp.com/report/#{@count}"
+  end
 end
 
 class TweetDestroyer
