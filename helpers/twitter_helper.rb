@@ -19,7 +19,7 @@ class Tweeter
   end
 
   def new_message
-    "#{@username} Thanks for your holiday wishes, check out your JingleBots receipt! jinglebots.herokuapp.com/souvenir/#{@count}"
+    "#{@username} Thanks for your holiday wishes, check out your JingleBots souvenir! jinglebots.herokuapp.com/report/#{@count}"
   end
 
 end
