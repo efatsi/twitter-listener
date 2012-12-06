@@ -8,7 +8,7 @@ load 'helpers/gif_collection.rb'
 load 'helpers/twitter_helper.rb'
 
 uri = URI.parse(ENV["JINGLEBOTS_REDIS_URI"])
-REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password, :timeout => 60*60*24*7)
 
 TWITTER = {
   :username     => ENV["JINGLEBOTS_TWITTER_USERNAME"],
@@ -27,6 +27,7 @@ EventMachine::run do
 
   stream.each_item do |item|
     tweet = JSON.parse(item)
+    File.open('logs', 'a') {|f| f.puts(tweet)}
     if tweet && tweet["user"]
       data = assemble_data(tweet)
       REDIS.lpush("messages", data.to_json)
