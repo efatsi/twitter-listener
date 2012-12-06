@@ -13,7 +13,7 @@ REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.passwor
 TWITTER = {
   :username     => ENV["JINGLEBOTS_TWITTER_USERNAME"],
   :password     => ENV["JINGLEBOTS_TWITTER_PASSWORD"],
-  :search_terms =>["@JingleBots"]
+  :search_terms =>["#jinglebots"]
 }
 
 EventMachine::run do
