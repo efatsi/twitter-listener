@@ -32,6 +32,7 @@ EventMachine::run do
       data = assemble_data(tweet)
       REDIS.lpush("messages", data.to_json)
       REDIS.set("message:#{data[:count]}", data.to_json)
+      REDIS.incr("tweet_number")
       REDIS.publish("holiday_messages", data.to_json)
       Tweeter.new(data[:name], data[:count]).send
     end
