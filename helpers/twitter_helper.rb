@@ -39,7 +39,7 @@ class Tweeter
   end
   
   def link
-    "jinglebots.herokuapp.com/report/#{@count}"
+    "jinglebots.com/report/#{@count}"
   end
 end
 
