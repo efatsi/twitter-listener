@@ -6,6 +6,7 @@ require 'redis'
 
 load 'helpers/gif_collection.rb'
 load 'helpers/twitter_helper.rb'
+load 'helpers/data_mapper.rb'
 
 uri = URI.parse(ENV["JINGLEBOTS_REDIS_URI"])
 REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password, :timeout => 60*60*24*7)
@@ -30,9 +31,11 @@ EventMachine::run do
     File.open('logs', 'a') {|f| f.puts(tweet)}
     if tweet && tweet["user"]
       data = assemble_data(tweet)
-      REDIS.lpush("messages", data.to_json)
-      REDIS.set("message:#{data[:count]}", data.to_json)
+      # REDIS.lpush("messages", data.to_json)
+      save_message_in_pg(data)
+      # REDIS.set("message:#{data[:count]}", data.to_json)
       REDIS.incr("tweet_number")
+      REDIS.incr("message_count")
       REDIS.publish("holiday_messages", data.to_json)
       Tweeter.new(data[:name], data[:count]).send
     end
@@ -69,8 +72,12 @@ EventMachine::run do
     })
   end
 
+  def save_message_in_pg(data)
+    Message.create(data)
+  end
+
   def assemble_data(tweet)
-    count = REDIS.llen("messages") + 1
+    count = Message.all.length + 1
     {:msg => tweet["text"], :name => "@#{tweet["user"]["screen_name"]}", :count => count, :gif_name => random_gif, :robot_name => random_robot, :time => Time.now, :source => "twitter", :avatar_url => avatar_url_for(tweet["user"]["screen_name"])}
   end
 
