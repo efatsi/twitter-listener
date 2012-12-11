@@ -28,12 +28,9 @@ EventMachine::run do
 
   stream.each_item do |item|
     tweet = JSON.parse(item)
-    File.open('logs', 'a') {|f| f.puts(tweet)}
     if tweet && tweet["user"]
       data = assemble_data(tweet)
       save_message_in_pg(data)
-      REDIS.incr("tweet_number")
-      REDIS.incr("message_count")
       REDIS.publish("holiday_messages", data.to_json)
       Tweeter.new(data[:name], data[:count]).send
     end
