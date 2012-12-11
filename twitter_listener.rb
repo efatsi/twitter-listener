@@ -31,9 +31,7 @@ EventMachine::run do
     File.open('logs', 'a') {|f| f.puts(tweet)}
     if tweet && tweet["user"]
       data = assemble_data(tweet)
-      # REDIS.lpush("messages", data.to_json)
       save_message_in_pg(data)
-      # REDIS.set("message:#{data[:count]}", data.to_json)
       REDIS.incr("tweet_number")
       REDIS.incr("message_count")
       REDIS.publish("holiday_messages", data.to_json)
