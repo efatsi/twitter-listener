@@ -85,7 +85,7 @@ EventMachine::run do
   end
 
   def save_message_in_pg(data)
-    Message.create(data)
+    Message.create!(data)
   end
 
   def assemble_data(tweet)
