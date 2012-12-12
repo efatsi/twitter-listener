@@ -32,7 +32,7 @@ EventMachine::run do
       data = assemble_data(tweet)
       save_message_in_pg(data)
       REDIS.publish("holiday_messages", data.to_json)
-      Tweeter.new(data[:name], data[:count]).send
+      Tweeter.new(data[:name], data[:count]).send unless data[:name] == "@JingleBots"
     end
   end
 
