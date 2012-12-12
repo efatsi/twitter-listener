@@ -41,7 +41,7 @@ EventMachine::run do
   end
 
   stream.on_reconnect do |timeout, retries|
-    mail_me("Reconnect", "Reconnecting in #{timeout} seconds")
+    mail_me("Reconnect", "Twitter listener went down. Reconnecting in #{timeout} seconds. Someone should restart it.")
   end
 
   stream.on_max_reconnects do |timeout, retries|
@@ -56,13 +56,30 @@ EventMachine::run do
     :body => body,
     :port => '587',
     :via => :smtp,
+    :via_options => {
+      :address              => 'smtp.gmail.com',
+      :port                 => '587',
+      :enable_starttls_auto => true,
+      :user_name            => 'jinglebots',
+      :password             => 'Viget123',
+      :authentication       => :plain,
+      :domain               => 'localhost.localdomain'
+    })
+
+    Pony.mail(
+    :from => 'jinglebots@gmail.com',
+    :to => 'ben.eckerson@viget.com',
+    :subject => subject,
+    :body => body,
+    :port => '587',
+    :via => :smtp,
     :via_options => { 
       :address              => 'smtp.gmail.com', 
-      :port                 => '587', 
-      :enable_starttls_auto => true, 
-      :user_name            => 'jinglebots', 
-      :password             => 'Viget123', 
-      :authentication       => :plain, 
+      :port                 => '587',
+      :enable_starttls_auto => true,
+      :user_name            => 'jinglebots',
+      :password             => 'Viget123',
+      :authentication       => :plain,
       :domain               => 'localhost.localdomain'
     })
   end
