@@ -25,10 +25,10 @@ class Tweeter
 
   def happy_holidays_messages
     ["No, happy holidays to YOU #{@username} #{link}",
-    "#{@username} Thanks for sharing some cheer, here’s a little something for you: #{link}",
+    "#{@username} Thanks for sharing some cheer, here's a little something for you: #{link}",
     "The latest to spread holiday cheer? That would be #{@username}  #{link}",
     "Holiday cheer from #{@username} captured: #{link}",
-    "#{@username} Thanks for spreading some cheer! Here’s a gift for you from the JingleBots: #{link}",
+    "#{@username} Thanks for spreading some cheer! Here's a gift for you from the JingleBots: #{link}",
     "#{@username} Your cheer was just spoken for all to hear by us! #{link}"
     ]
   end
