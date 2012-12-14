@@ -33,7 +33,7 @@ EventMachine::run do
       puts "#{data[:name]} - #{data[:msg]}"
       save_message_in_pg(data)
       REDIS.publish("holiday_messages", data.to_json)
-      Tweeter.new(data[:name], data[:count]).send unless data[:name] == "@JingleBots"
+      Tweeter.new(data[:name], data[:count], data[:msg]).send unless data[:name] == "@JingleBots"
     end
   end
 
